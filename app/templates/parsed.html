@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+      <h1>Parsed site: </h1>
+<table border="1">
+  <tr>
+    <td>URL</td>
+    <td>Title</td>
+    <td>Keywords</td>
+    <td>Descripton</td>
+  </tr>
+
+    <tr>
+    <td>{{page.url}}</td>
+    <td>{{page.title}}</td>
+    <td>{{page.keywords}}</td>
+    <td>{{page.description}}</td>
+    </tr>
+
+    </table>
+  </body>
+{% endblock %}

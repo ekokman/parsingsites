@@ -1,0 +1,15 @@
+<html>
+  <head>
+    {% if title %}
+    <title>{{title}}</title>
+    {% else %}
+    <title>parsing of sites</title>
+    {% endif %}
+  </head>
+  <body>
+    <div><a href="/index">Main</a></div>
+    <div><a href="/parsing">Parsing</a></div>
+    <hr>
+    {% block content %}{% endblock %}
+  </body>
+</html>

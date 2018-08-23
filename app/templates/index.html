@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+      <h1>Parsed sites: {{count_sites}}</h1>
+<table border="1">
+  <tr>
+    <td>URL</td>
+    <td>Title</td>
+    <td>Keywords</td>
+    <td>Descripton</td>
+  </tr>
+      {% for site in sites%}
+    <tr>
+    <td>{{site.url}}</td>
+    <td>{{site.title}}</td>
+    <td>{{site.keywords}}</td>
+    <td>{{site.description}}</td>
+    </tr>
+      {% endfor %}
+    </table>
+  </body>
+{% endblock %}
