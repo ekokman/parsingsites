@@ -10,6 +10,9 @@
     <div><a href="/index">Main</a></div>
     <div><a href="/parsing">Parsing</a></div>
     <hr>
+    {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+    {% endfor %}
     {% block content %}{% endblock %}
   </body>
 </html>

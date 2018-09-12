@@ -1,11 +1,12 @@
-from flask import render_template, flash, redirect
+from flask import render_template, redirect, request, flash
 from app import app
-from forms import ParsingForm
 from bs4 import BeautifulSoup
+from app.db import add_url, list_of_url, search
 import urllib.request
+import validators
 
 
-def parsed_url(url):
+def parsing_url(url):
     page = urllib.request.urlopen(url)
     html = BeautifulSoup(page.read(), "html.parser")
     title, keywords, description = None, None, None
@@ -29,38 +30,35 @@ def parsed_url(url):
 @app.route('/')
 @app.route('/index')
 def index():
-    sites = [  # список сайтов
-        {
-            'url': 'https://translate.yandex.ru/',
-            'title': 'Яндекс.Переводчик – словарь и онлайн перевод на английский, русский, немецкий, французский, украинский и другие языки.',
-            'keywords': 'перевод, переводчик, перевод онлайн, переводчик онлайн, translate, англо-русский, машинный перевод"',
-            'description': 'Перевод с английского, немецкого, французского, испанского, польского, турецкого и других языков на русский и обратно. Возможность переводить отдельные слова и фразы, а также целые тексты и в'
-        }
-    ]
-    count_sites = len(sites)
+    parsed_sites = list_of_url()
     return render_template("index.html",
                            title="Main",
-                           sites=sites,
-                           count_sites=count_sites
+                           sites=parsed_sites,
+                           count_sites=len(parsed_sites)
                            )
 
-@app.route('/parsing', methods = ['GET', 'POST'])
+
+@app.route('/parsing/')
 def parsing():
-    form = ParsingForm()
-    if form.validate_on_submit():
-        return redirect('/parsed')
-    return render_template('parsing.html',
-                           title='Parsing',
-                           form=form
-                           )
+    return render_template('parsing.html', title="Parsing")
 
-@app.route('/parsed', methods = ['GET'])
+
+@app.route('/parsed/', methods=['POST'])
 def parsed():
-
-    url = 'https://habr.com/post/193242/'
-    url2 = 'https://translate.yandex.ru/'
+    error = None
+    url = request.form['url']
+    parsed_url = None
+    if validators.url(url) is not True:
+        error = "Not a valid URL"
+    elif search(url) == False:
+        error = 'The URL is already in the database'
+    else:
+        parsed_url = parsing_url(url)
+        add_url(parsed_url)
+    flash(error)
     return render_template('parsed.html',
-                           title='Parsed',
-                           page=parsed_url(url2)
+                           url=url,
+                           parsed_url=parsed_url,
+                           title="Parsed",
+                           error=error
                            )
-

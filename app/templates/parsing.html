@@ -1,14 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
       <h1>Parsing site:</h1>
-<form action="" method="post" name="site">
-    {{form.hidden_tag()}}
-    <p>
-        Please enter URL of site:<br>
-        {{form.url_of_site(size=100)}}
-    </p>
+<form action='/parsed/' method="POST" name="url">
+    <p>Please enter URL of site:<br></p>
+    <td><input type="text" name="url" placeholder="url"></td>
     <p><input type="submit" value="Parsing"></p>
-
 </form>
   </body>
 {% endblock %}

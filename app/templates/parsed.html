@@ -1,21 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
-      <h1>Parsed site: </h1>
+{% if parsed_url %}
+<h1>Parsed site: </h1>
 <table border="1">
   <tr>
-    <td>URL</td>
-    <td>Title</td>
-    <td>Keywords</td>
-    <td>Descripton</td>
+    <td><b>URL</b></td>
+    <td><b>Title</b></td>
+    <td><b>Keywords</b></td>
+    <td><b>Descripton</b></td>
   </tr>
 
-    <tr>
-    <td>{{page.url}}</td>
-    <td>{{page.title}}</td>
-    <td>{{page.keywords}}</td>
-    <td>{{page.description}}</td>
+  <tr>
+    <td>{{parsed_url.url}}</td>
+    <td>{{parsed_url.title}}</td>
+    <td>{{parsed_url.keywords}}</td>
+    <td>{{parsed_url.description}}</td>
     </tr>
+</table>
+{%endif%}
 
-    </table>
   </body>
 {% endblock %}

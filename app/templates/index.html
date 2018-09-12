@@ -3,10 +3,10 @@
       <h1>Parsed sites: {{count_sites}}</h1>
 <table border="1">
   <tr>
-    <td>URL</td>
-    <td>Title</td>
-    <td>Keywords</td>
-    <td>Descripton</td>
+    <td><b>URL</b></td>
+    <td><b>Title</b></td>
+    <td><b>Keywords</b></td>
+    <td><b>Descripton</b></td>
   </tr>
       {% for site in sites%}
     <tr>
@@ -17,5 +17,6 @@
     </tr>
       {% endfor %}
     </table>
+    <p>{{parsed_sites}}</p>
   </body>
 {% endblock %}
