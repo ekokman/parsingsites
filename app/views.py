@@ -1,9 +1,11 @@
-from flask import render_template, redirect, request, flash
-from app import app
+from flask import render_template, request, flash
 from bs4 import BeautifulSoup
-from app.db import add_url, list_of_url, search
+
 import urllib.request
 import validators
+
+from app import app
+from app.models import Site
 
 
 def parsing_url(url):
@@ -29,13 +31,13 @@ def parsing_url(url):
 
 @app.route('/')
 def index():
-    parsed_sites = list_of_url()
+    site = Site(1, 2, 3, 4)
+    parsed_sites = site.list_of_full()
     return render_template("index.html",
                            title="Main",
                            sites=parsed_sites,
                            count_sites=len(parsed_sites)
                            )
-
 
 @app.route('/parsing/')
 def parsing():
@@ -46,14 +48,21 @@ def parsing():
 def parsed():
     error = None
     url = request.form['url']
-    parsed_url = None
+    parsed_url = parsing_url(url)
+    site = Site(
+        parsed_url['url'],
+        parsed_url['title'],
+        parsed_url['keywords'],
+        parsed_url['description']
+    )
     if validators.url(url) is not True:
         error = "Not a valid URL"
-    elif search(url) == False:
+    elif site.search(url) == False:
         error = 'The URL is already in the database'
+        parsed_url = None
     else:
-        parsed_url = parsing_url(url)
-        add_url(parsed_url)
+
+        site.add_url()
     flash(error)
     return render_template('parsed.html',
                            url=url,
