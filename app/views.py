@@ -1,8 +1,8 @@
-from flask import render_template, request, flash
-from bs4 import BeautifulSoup
-
 import urllib.request
 import validators
+
+from flask import render_template, request, flash
+from bs4 import BeautifulSoup
 
 from app import app
 from app.models import Site
