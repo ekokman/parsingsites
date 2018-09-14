@@ -1,7 +1,7 @@
 from app import db
 
 
-class Sites(db.Model):
+class Site(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.String())
     title = db.Column(db.String())

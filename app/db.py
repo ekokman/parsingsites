@@ -1,11 +1,11 @@
-from app.models import Sites
+from app.models import Site
 from app import db
 
 db.create_all()
 
 
 def add_url(url):
-    site = Sites(
+    site = Site(
         url['url'],
         url['title'],
         url['keywords'],
@@ -16,9 +16,9 @@ def add_url(url):
 
 
 def list_of_url():
-    return Sites.query.all()
+    return Site.query.all()
 
 
 def search(url):
-    missing = Sites.query.filter_by(url=url).first()
+    missing = Site.query.filter_by(url=url).first()
     return missing is None

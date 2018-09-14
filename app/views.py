@@ -28,7 +28,6 @@ def parsing_url(url):
 
 
 @app.route('/')
-@app.route('/index')
 def index():
     parsed_sites = list_of_url()
     return render_template("index.html",
